@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Workplace Productivity Assistant</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        header {
+            background: #2563eb;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0 0 10px;
+        }
+
+        header p {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .feature {
+            background: white;
+            border: 1px solid #dbe3ef;
+            border-radius: 10px;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .feature h3 {
+            margin: 8px 0;
+        }
+
+        .feature button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        .feature button:hover {
+            background: #1d4ed8;
+        }
+
+        .panel {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 180px;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            resize: vertical;
+            font-family: Arial, sans-serif;
+        }
+
+        .generate {
+            margin-top: 15px;
+            background: #16a34a;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .output {
+            margin-top: 20px;
+            background: #f8fafc;
+            border-left: 4px solid #2563eb;
+            padding: 18px;
+            white-space: pre-wrap;
+            min-height: 100px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>AI-Powered Workplace Productivity Assistant</h1>
+    <p>AI support for common workplace productivity tasks</p>
+</header>
+
+<div class="container">
+
+    <div class="features">
+
+        <div class="feature">
+            <div>📧</div>
+            <h3>Email Generator</h3>
+            <button onclick="selectMode('email')">Select</button>
+        </div>
+
+        <div class="feature">
+            <div>📝</div>
+            <h3>Meeting Summarizer</h3>
+            <button onclick="selectMode('meeting')">Select</button>
+        </div>
+
+        <div class="feature">
+            <div>✅</div>
+            <h3>Task Planner</h3>
+            <button onclick="selectMode('tasks')">Select</button>
+        </div>
+
+        <div class="feature">
+            <div>🔎</div>
+            <h3>Research Assistant</h3>
+            <button onclick="selectMode('research')">Select</button>
+        </div>
+
+        <div class="feature">
+            <div>💬</div>
+            <h3>Workplace Chatbot</h3>
+            <button onclick="selectMode('chatbot')">Select</button>
+        </div>
+
+    </div>
+
+    <div class="panel">
+
+        <h2 id="modeTitle">Choose an Assistant Feature</h2>
+
+        <p id="instructions">
+            Select one of the workplace productivity features above.
+        </p>
+
+        <textarea id="userInput"
+            placeholder="Enter your workplace request here..."></textarea>
+
+        <br>
+
+        <button class="generate" onclick="generateResponse()">
+            Generate Response
+        </button>
+
+        <div class="output" id="output">
+            Your response will appear here.
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+    AI Skills Program | AI-Powered Workplace Productivity Assistant
+</footer>
+
+<script>
+
+let currentMode = "";
+
+const modes = {
+
+    email: {
+        title: "📧 Email Generator",
+        instructions: "Enter the purpose, recipient and important details for your email."
+    },
+
+    meeting: {
+        title: "📝 Meeting Summarizer",
+        instructions: "Paste your meeting notes or transcript below."
+    },
+
+    tasks: {
+        title: "✅ Task Planner",
+        instructions: "Describe your workplace goal or project."
+    },
+
+    research: {
+        title: "🔎 Research Assistant",
+        instructions: "Enter the workplace research question you want to investigate."
+    },
+
+    chatbot: {
+        title: "💬 Workplace Chatbot",
+        instructions: "Ask a general workplace productivity question."
+    }
+
+};
+
+function selectMode(mode) {
+
+    currentMode = mode;
+
+    document.getElementById("modeTitle").textContent =
+        modes[mode].title;
+
+    document.getElementById("instructions").textContent =
+        modes[mode].instructions;
+
+    document.getElementById("userInput").value = "";
+
+    document.getElementById("output").textContent =
+        "Ready for your request.";
+
+}
+
+function generateResponse() {
+
+    const input =
+        document.getElementById("userInput").value.trim();
+
+    if (!currentMode) {
+        alert("Please select an assistant feature first.");
+        return;
+    }
+
+    if (!input) {
+        alert("Please enter some information.");
+        return;
+    }
+
+    let response = "";
+
+    if (currentMode === "email") {
+
+        response =
+`EMAIL GENERATION
+
+Subject: Workplace Request
+
+Dear Manager,
+
+${input}
+
+Please let me know a suitable time to discuss this further.
+
+Kind regards,
+[Your Name]
+
+Note: Review and personalize the AI-generated email before sending.`;
+
+    }
+
+    else if (currentMode === "meeting") {
+
+        response =
+`MEETING SUMMARY
+
+Key Discussion Points:
+- Review the information provided in the meeting notes.
+
+Decisions Made:
+- Decisions should be confirmed against the original meeting notes.
+
+Action Items:
+- Identify required actions from the meeting notes.
+- Confirm responsible people and deadlines.
+
+Outstanding Issues:
+- Review the original notes for unresolved items.
+
+IMPORTANT:
+This prototype demonstrates the meeting summarization workflow.
+AI-generated summaries should be checked against the original meeting notes.`;
+
+    }
+
+    else if (currentMode === "tasks") {
+
+        response =
+`ACTION PLAN
+
+Main Objective:
+${input}
+
+Recommended Priority:
+High
+
+Recommended Next Steps:
+1. Define the project requirements.
+2. Break the objective into smaller tasks.
+3. Prioritize tasks according to urgency and importance.
+4. Complete the highest-priority task first.
+5. Review progress and update the plan.
+
+Note:
+Deadlines and responsibilities should only be added when provided or clearly identified as suggestions.`;
+
+    }
+
+    else if (currentMode === "research") {
+
+        response =
+`RESEARCH BRIEF
+
+Research Question:
+${input}
+
+Suggested Research Areas:
+- Key benefits
+- Potential risks
+- Workplace applications
+- Limitations
+- Responsible AI considerations
+
+Recommendations:
+Use reliable and authoritative sources and verify important claims before using them.
+
+IMPORTANT:
+Do not treat unverified AI-generated information as established fact.`;
+
+    }
+
+    else if (currentMode === "chatbot") {
+
+        response =
+`WORKPLACE ASSISTANT
+
+I can help you with:
+
+📧 Email generation
+📝 Meeting summarization
+✅ Task planning
+🔎 Research assistance
+💬 General workplace productivity
+
+Your request:
+${input}
+
+Next step:
+Provide additional context if you need a more specific response.
+
+Remember to review important AI-generated information before using it.`;
+
+    }
+
+    document.getElementById("output").textContent = response;
+
+}
+
+</script>
+
+</body>
+</html>
